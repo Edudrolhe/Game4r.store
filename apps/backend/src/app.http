@@ -1,1 +1,7 @@
 GET http://localhost:4000/ping
+
+### Get all produtos
+GET http://localhost:4000/produtos
+
+### Get produto by id
+GET http://localhost:4000/produtos/1
