@@ -17,7 +17,6 @@ async function main() {
   });
 
   await prisma.produto.createMany({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     data: produtos.map(({ id, ...rest }) => rest),
   });
 

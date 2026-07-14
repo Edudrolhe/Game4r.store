@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Staus" AS ENUM ('PENDENTE', 'APROVADO', 'REPROVADO', 'CANCELADO');
+CREATE TYPE "Staus" AS ENUM ('RECEBIDO', 'PENDENTE', 'APROVADO', 'REPROVADO', 'CANCELADO');
 
 -- CreateEnum
-CREATE TYPE "FormaPagamento" AS ENUM ('PIX', 'BOLETO', 'CARTAO_CREDITO', 'CARTAO_DEBITO', 'DINHEIRO');
+CREATE TYPE "FormaPagamento" AS ENUM ('PIX', 'BOLETO', 'CARTAO', 'CARTAO_CREDITO', 'CARTAO_DEBITO', 'DINHEIRO');
 
 -- CreateTable
 CREATE TABLE "Produto" (
@@ -26,12 +26,30 @@ CREATE TABLE "Produto" (
 );
 
 -- CreateTable
+CREATE TABLE "Usuario" (
+    "id" SERIAL NOT NULL,
+    "nome" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "senha" TEXT NOT NULL,
+    "telefone" TEXT NOT NULL,
+    "endereco" TEXT NOT NULL,
+    "numero" TEXT NOT NULL,
+    "bairro" TEXT NOT NULL,
+    "cidade" TEXT NOT NULL,
+    "estado" TEXT NOT NULL,
+    "cep" TEXT NOT NULL,
+
+    CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Pedido" (
     "id" SERIAL NOT NULL,
     "total" DOUBLE PRECISION NOT NULL,
     "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "Staus" NOT NULL DEFAULT 'PENDENTE',
     "formaPagamento" "FormaPagamento" NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
 
     CONSTRAINT "Pedido_pkey" PRIMARY KEY ("id")
 );
@@ -66,7 +84,13 @@ CREATE TABLE "ItemPedido" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "PedidoEntrega_pedidoId_key" ON "PedidoEntrega"("pedidoId");
+
+-- AddForeignKey
+ALTER TABLE "Pedido" ADD CONSTRAINT "Pedido_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PedidoEntrega" ADD CONSTRAINT "PedidoEntrega_pedidoId_fkey" FOREIGN KEY ("pedidoId") REFERENCES "Pedido"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

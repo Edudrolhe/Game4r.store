@@ -8,6 +8,7 @@ datasource db {
 }
 
 enum Staus {
+  RECEBIDO
   PENDENTE
   APROVADO
   REPROVADO
@@ -17,6 +18,7 @@ enum Staus {
 enum FormaPagamento {
   PIX
   BOLETO
+  CARTAO
   CARTAO_CREDITO
   CARTAO_DEBITO
   DINHEIRO
@@ -42,12 +44,31 @@ model Produto {
   itens ItemPedido[]
 }
 
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  telefone  String
+  endereco  String
+  numero    String
+  bairro    String
+  cidade    String
+  estado    String
+  cep       String
+
+  pedidos Pedido[]
+}
+
 model Pedido {
   id             Int           @id @default(autoincrement())
   total          Float
   data           DateTime      @default(now())
   status         Staus         @default(PENDENTE)
   formaPagamento FormaPagamento
+
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   entrega PedidoEntrega?
   itens   ItemPedido[]

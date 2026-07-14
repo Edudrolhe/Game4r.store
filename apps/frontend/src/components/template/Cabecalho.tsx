@@ -1,10 +1,26 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Logo from '../shared/Logo'
 import IconeCarrinho from '../shared/IconeCarrinho'
 import Link from 'next/link'
-import { IconUser } from '@tabler/icons-react'
+import { IconUser, IconLogout } from '@tabler/icons-react'
 
 export default function Cabecalho() {
+    const [nome, setNome] = useState<string | null>(null)
     const qtdeItens = 0
+
+    useEffect(() => {
+        const nomeSalvo = localStorage.getItem('usuarioNome')
+        if (nomeSalvo) setNome(nomeSalvo)
+    }, [])
+
+    function sair() {
+        localStorage.removeItem('token')
+        localStorage.removeItem('usuarioNome')
+        setNome(null)
+    }
+
     return (
         <div
             className="flex flex-col h-16 sm:h-20"
@@ -16,11 +32,20 @@ export default function Cabecalho() {
                 <div className="flex justify-between items-center">
                     <Logo />
                     <div className="flex gap-2 items-center">
-                        <Link href="/login">
-                            <div className="flex justify-center items-center rounded-full w-12 h-12 sm:w-14 sm:h-14 bg-violet-dark">
-                                <IconUser size={24} stroke={1.3} className="sm:size-[30px] text-white" />
-                            </div>
-                        </Link>
+                        {nome ? (
+                            <>
+                                <span className="text-zinc-300 text-sm hidden sm:block">{nome}</span>
+                                <button onClick={sair} className="flex justify-center items-center rounded-full w-12 h-12 sm:w-14 sm:h-14 bg-violet-dark cursor-pointer">
+                                    <IconLogout size={24} stroke={1.3} className="sm:size-[30px] text-white" />
+                                </button>
+                            </>
+                        ) : (
+                            <Link href="/login">
+                                <div className="flex justify-center items-center rounded-full w-12 h-12 sm:w-14 sm:h-14 bg-violet-dark">
+                                    <IconUser size={24} stroke={1.3} className="sm:size-[30px] text-white" />
+                                </div>
+                            </Link>
+                        )}
                         <Link href="/checkout/carrinho">
                             <IconeCarrinho qtdeItens={qtdeItens} />
                         </Link>
