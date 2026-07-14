@@ -22,6 +22,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "clean": "rm -rf dist node_modules"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@game4r/core": "*",
     "@nestjs/common": "^11.0.1",

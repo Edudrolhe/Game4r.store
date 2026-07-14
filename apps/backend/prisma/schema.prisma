@@ -7,6 +7,21 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Staus {
+  PENDENTE
+  APROVADO
+  REPROVADO
+  CANCELADO
+}
+
+enum FormaPagamento {
+  PIX
+  BOLETO
+  CARTAO_CREDITO
+  CARTAO_DEBITO
+  DINHEIRO
+}
+
 model Produto {
   id               Int      @id @default(autoincrement())
   nome             String
@@ -23,4 +38,46 @@ model Produto {
   maiorPreco       Float
   precoMedio       Float
   especificacoes   Json
+
+  itens ItemPedido[]
+}
+
+model Pedido {
+  id             Int           @id @default(autoincrement())
+  total          Float
+  data           DateTime      @default(now())
+  status         Staus         @default(PENDENTE)
+  formaPagamento FormaPagamento
+
+  entrega PedidoEntrega?
+  itens   ItemPedido[]
+}
+
+model PedidoEntrega {
+  id          Int    @id @default(autoincrement())
+  nome        String
+  email       String
+  telefone    String
+  endereco    String
+  numero      String
+  complemento String?
+  bairro      String
+  cidade      String
+  estado      String
+  cep         String
+
+  pedidoId Int  @unique
+  pedido   Pedido @relation(fields: [pedidoId], references: [id])
+}
+
+model ItemPedido {
+  id            Int   @id @default(autoincrement())
+  quantidade    Int
+  precoUnitario Float
+
+  produtoId Int
+  produto   Produto @relation(fields: [produtoId], references: [id])
+
+  pedidoId Int
+  pedido   Pedido @relation(fields: [pedidoId], references: [id])
 }
