@@ -41,7 +41,8 @@ model Produto {
   precoMedio       Float
   especificacoes   Json
 
-  itens ItemPedido[]
+  itens      ItemPedido[]
+  avaliacoes Avaliacao[]
 }
 
 model Usuario {
@@ -57,7 +58,21 @@ model Usuario {
   estado    String
   cep       String
 
-  pedidos Pedido[]
+  pedidos    Pedido[]
+  avaliacoes Avaliacao[]
+}
+
+model Avaliacao {
+  id        Int      @id @default(autoincrement())
+  produtoId Int
+  produto   Produto  @relation(fields: [produtoId], references: [id])
+  usuarioId Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  nota      Float
+  comentario String
+  data      DateTime @default(now())
+
+  @@unique([produtoId, usuarioId])
 }
 
 model Pedido {

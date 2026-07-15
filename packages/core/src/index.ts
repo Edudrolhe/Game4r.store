@@ -1,3 +1,4 @@
+export * from "./avaliacao"
 export * from "./constants"
 export * from "./parcelamento"
 export * from "./pedido"
