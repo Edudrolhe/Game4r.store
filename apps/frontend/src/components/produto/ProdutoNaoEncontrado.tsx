@@ -12,7 +12,7 @@ export default function ProdutoNaoEncontrado() {
                 href="/"
                 className="btn-primary mt-4"
             >
-                Voltar para loja
+                Voltar para lojaßß
             </Link>
         </div>
     )

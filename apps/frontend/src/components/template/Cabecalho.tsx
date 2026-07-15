@@ -3,17 +3,18 @@
 import { useEffect, useState } from 'react'
 import Logo from '../shared/Logo'
 import IconeCarrinho from '../shared/IconeCarrinho'
+import useCarrinho from '@/src/data/hooks/useCarrinho'
 import Link from 'next/link'
 import { IconUser, IconLogout } from '@tabler/icons-react'
 
 export default function Cabecalho() {
     const [nome, setNome] = useState<string | null>(null)
-    const qtdeItens = 0
 
     useEffect(() => {
         const nomeSalvo = localStorage.getItem('usuarioNome')
-        if (nomeSalvo) setNome(nomeSalvo)
+        if (nomeSalvo) Promise.resolve().then(() => setNome(nomeSalvo))
     }, [])
+    const { qtdeItens } = useCarrinho()
 
     function sair() {
         localStorage.removeItem('token')
@@ -36,13 +37,13 @@ export default function Cabecalho() {
                             <>
                                 <span className="text-zinc-300 text-sm hidden sm:block">{nome}</span>
                                 <button onClick={sair} className="flex justify-center items-center rounded-full w-12 h-12 sm:w-14 sm:h-14 bg-violet-dark cursor-pointer">
-                                    <IconLogout size={24} stroke={1.3} className="sm:size-[30px] text-white" />
+                                    <IconLogout size={24} stroke={1.3} className="sm:size-7.5 text-white" />
                                 </button>
                             </>
                         ) : (
                             <Link href="/login">
                                 <div className="flex justify-center items-center rounded-full w-12 h-12 sm:w-14 sm:h-14 bg-violet-dark">
-                                    <IconUser size={24} stroke={1.3} className="sm:size-[30px] text-white" />
+                                    <IconUser size={24} stroke={1.3} className="sm:size-7.5 text-white" />
                                 </div>
                             </Link>
                         )}
