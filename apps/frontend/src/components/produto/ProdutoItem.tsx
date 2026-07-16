@@ -4,6 +4,7 @@ import { IconShoppingCartPlus } from '@tabler/icons-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import NotaReview from '../shared/NotaReview'
+import useCarrinho from '@/data/hooks/useCarrinho'
 
 export interface ProdutoItemProps {
     produto: Produto
@@ -11,6 +12,7 @@ export interface ProdutoItemProps {
 
 export default function ProdutoItem(props: ProdutoItemProps) {
     const { produto } = props
+    const { adicionarItem } = useCarrinho()
 
     return (
         <Link
@@ -43,10 +45,10 @@ export default function ProdutoItem(props: ProdutoItemProps) {
                     </span>
                 </div>
                 <button
-                    className="btn-primary gap-2"
+                    className="btn-primary gap-2 active:scale-95 transition-transform duration-100"
                     onClick={(e) => {
                         e.preventDefault()
-                        console.log('Adicionar ao carrinho')
+                        adicionarItem(produto)
                     }}
                 >
                     <IconShoppingCartPlus size={20} />

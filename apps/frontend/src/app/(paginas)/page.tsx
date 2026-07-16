@@ -1,5 +1,5 @@
-import FiltroProduto from '@/src/components/produto/FiltroProduto'
-import ListaProdutos from '@/src/components/produto/ListaProdutos'
+import FiltroProduto from '@/components/produto/FiltroProduto'
+import ListaProdutos from '@/components/produto/ListaProdutos'
 
 
 export default function Home() {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { apiFetch } from '@/src/data/api';
+import { apiFetch } from '@/data/api';
 
 export default function CadastroPage() {
   const [form, setForm] = useState({

@@ -1,6 +1,6 @@
 'use client'
 import ProdutoItem from './ProdutoItem'
-import useProdutos from '@/src/data/hooks/useProdutos'
+import useProdutos from '@/data/hooks/useProdutos'
 
 export default function ListaProdutos() {
     const { produtos } = useProdutos()

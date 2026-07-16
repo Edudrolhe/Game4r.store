@@ -2,7 +2,7 @@
 import { Moeda, CalcularParcelamento, QTDE_MAX_PARCELAS } from '@game4r/core'
 import type { Produto } from '@game4r/core'
 import { IconShoppingCartPlus } from '@tabler/icons-react'
-import useCarrinho from '@/src/data/hooks/useCarrinho'
+import useCarrinho from '@/data/hooks/useCarrinho'
 
 export interface BannerCompraProps {
     produto: Produto
@@ -34,7 +34,7 @@ export default function BannerCompra(props: BannerCompraProps) {
                 </span>
             </div>
             <button
-                className="btn-primary gap-2 text-base py-3 px-8 w-full sm:w-auto"
+                className="btn-primary gap-2 text-base py-3 px-8 w-full sm:w-auto active:scale-95 transition-transform duration-100"
                 onClick={() => adicionarItem(produto)}
             >
                 <IconShoppingCartPlus size={24} />

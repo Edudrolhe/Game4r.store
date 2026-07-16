@@ -121,6 +121,16 @@ body {
   font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
 }
 
+@keyframes ping-once {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+@utility animate-ping-once {
+  animation: ping-once 0.3s ease-out;
+}
+
 @layer components {
   .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-10;
@@ -128,5 +138,9 @@ body {
 
   .btn-primary {
     @apply flex items-center justify-center bg-violet-dark text-white font-semibold py-2.5 px-6 rounded-lg hover:opacity-90 transition-opacity;
+  }
+
+  .input {
+    @apply bg-black/30 border border-zinc-700 rounded-lg px-4 py-2.5 text-white outline-none focus:border-violet-500;
   }
 }

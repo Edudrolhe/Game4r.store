@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Logo from '../shared/Logo'
 import IconeCarrinho from '../shared/IconeCarrinho'
-import useCarrinho from '@/src/data/hooks/useCarrinho'
+import useCarrinho from '@/data/hooks/useCarrinho'
 import Link from 'next/link'
 import { IconUser, IconLogout } from '@tabler/icons-react'
 
