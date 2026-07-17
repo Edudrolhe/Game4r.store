@@ -34,8 +34,9 @@ export type SalvarPedido = {
 export class PedidoPrisma {
   constructor(private readonly prisma: PrismaProvider) {}
 
-  obter(): Promise<Pedido[]> {
+  obter(usuarioId: number): Promise<Pedido[]> {
     return this.prisma.client.pedido.findMany({
+      where: { usuarioId },
       include: {
         itens: {
           include: { produto: { select: { id: true, nome: true } } },
@@ -45,9 +46,9 @@ export class PedidoPrisma {
     });
   }
 
-  async obterPorId(id: number): Promise<Pedido | null> {
+  async obterPorId(id: number, usuarioId: number): Promise<Pedido | null> {
     return this.prisma.client.pedido.findUnique({
-      where: { id },
+      where: { id, usuarioId },
       include: {
         itens: {
           include: { produto: { select: { id: true, nome: true } } },

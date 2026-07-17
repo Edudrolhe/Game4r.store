@@ -24,13 +24,15 @@ export class PedidoController {
   }
 
   @Get()
-  obterTodos(): Promise<Pedido[]> {
-    return this.repo.obter();
+  @UseGuards(AuthGuard)
+  obterTodos(@Usuario() usuario: { sub: number }): Promise<Pedido[]> {
+    return this.repo.obter(usuario.sub);
   }
 
   @Get(':id')
-  obterPorId(@Param('id', ParseIntPipe) id: number): Promise<Pedido | null> {
-    return this.repo.obterPorId(id);
+  @UseGuards(AuthGuard)
+  obterPorId(@Param('id', ParseIntPipe) id: number, @Usuario() usuario: { sub: number }): Promise<Pedido | null> {
+    return this.repo.obterPorId(id, usuario.sub);
   }
 
   @Delete(':id')

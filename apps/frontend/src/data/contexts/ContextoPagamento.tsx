@@ -47,6 +47,12 @@ export function ProvedorPagamento({ children }: { children: React.ReactNode }) {
     }
 
     async function finalizarCompra() {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        if (!token) {
+            router.push('/login')
+            return
+        }
+
         try {
             const pedido = {
                 data: new Date().toISOString(),
@@ -65,9 +71,12 @@ export function ProvedorPagamento({ children }: { children: React.ReactNode }) {
             }
 
             await httpPost<Pedido>('/pedidos', pedido)
-        } catch { /* ignora erro de autenticação/rede */ }
-        limparCarrinho()
-        router.push('/checkout/sucesso')
+            limparCarrinho()
+            router.push('/checkout/sucesso')
+        } catch {
+            localStorage.removeItem('token')
+            router.push('/login')
+        }
     }
 
     return (

@@ -15,8 +15,8 @@ export default function ResumoPagamento(props: ResumoPagamentoProps) {
     return (
         <div
             className={`
-                flex flex-col self-start gap-3 
-                w-96 px-6 py-8
+                flex flex-col self-stretch sm:self-start gap-3 
+                w-full sm:w-96 px-6 py-8
                 bg-violet-dark rounded-xl
                 ${props.className ?? ''}
             `}

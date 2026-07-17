@@ -50,7 +50,7 @@ export default function CadastroPage() {
     { label: 'Número', field: 'numero', type: 'text' },
     { label: 'Bairro', field: 'bairro', type: 'text' },
     { label: 'Cidade', field: 'cidade', type: 'text' },
-    { label: 'Estado', field: 'estado', type: 'text' },
+    { label: 'UF', field: 'estado', type: 'text' },
     { label: 'CEP', field: 'cep', type: 'text' },
   ];
 

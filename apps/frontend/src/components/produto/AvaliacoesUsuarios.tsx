@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Produto } from '@game4r/core'
 import NotaReview from '../shared/NotaReview'
 
-const API = 'http://localhost:4000'
+const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
 
 export interface AvaliacoesUsuariosProps {
     produto: Produto

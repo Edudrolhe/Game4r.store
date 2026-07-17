@@ -5,12 +5,24 @@ import InformacoesProduto from '@/components/produto/InformacoesProduto'
 import MedidorDePreco from '@/components/produto/MedidorDePreco'
 import ProdutoNaoEncontrado from '@/components/produto/ProdutoNaoEncontrado'
 import TituloProduto from '@/components/produto/TituloProduto'
-import { produtos } from '@game4r/core'
+import type { Produto } from '@game4r/core'
+
+const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
+
+async function buscarProduto(id: number): Promise<Produto | null> {
+    try {
+        const res = await fetch(`${API}/produtos/${id}`, { next: { revalidate: 60 } })
+        if (!res.ok) return null
+        return res.json()
+    } catch {
+        return null
+    }
+}
 
 export default async function PaginaProduto(props: { params: Promise<{ id: string }> }) {
     const { id: idStr } = await props.params
     const id = +idStr
-    const produto = produtos.find((produto) => produto.id === id)
+    const produto = await buscarProduto(id)
 
     return produto ? (
         <div className="flex flex-col gap-20 container py-10">

@@ -13,8 +13,8 @@ export default function Pagina() {
     return (
         <div className="flex flex-col gap-5 container">
             <CabecalhoCheckout passo="pagamento" />
-            <div className="flex flex-col lg:flex-row gap-5">
-                <div className="flex-1 flex flex-col gap-5">
+            <div className="flex flex-col items-center sm:items-stretch lg:flex-row gap-5">
+                <div className="flex-1 flex flex-col gap-5 w-full sm:w-auto">
                     <FormularioEntrega
                         entrega={entrega}
                         entregaMudou={alterarEntrega}
