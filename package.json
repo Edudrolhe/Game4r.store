@@ -26,7 +26,11 @@
     "unrs-resolver@1.12.2": true
   },
   "dependencies": {
+    "@expo/cli": "^57.0.9",
     "@nestjs/jwt": "^11.0.2",
-    "bcrypt": "^6.0.0"
+    "bcrypt": "^6.0.0",
+    "expo": "~57.0.7",
+    "react": "19.2.3",
+    "react-native": "0.86.0"
   }
 }

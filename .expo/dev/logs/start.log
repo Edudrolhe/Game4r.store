@@ -1,0 +1,17 @@
+{"_e":"root:init","_t":1784308805401,"format":"v0-jsonl","version":"57.0.9"}
+{"_e":"env:mode","_t":1784308805401,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1784308805402,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1784308805511,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../../../app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1784308805697,"serverRoot":"../../..","projectRoot":"../../..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1784308805784,"plugins":[]}
+{"_e":"metro:instantiate","_t":1784308806365,"atlas":false,"workers":7,"host":"::","port":8081}
+{"_e":"root:init","_t":1784309774945,"format":"v0-jsonl","version":"57.0.9"}
+{"_e":"env:mode","_t":1784309774945,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1784309774946,"mode":"development","files":[],"env":{}}
+{"_e":"root:init","_t":1784311351153,"format":"v0-jsonl","version":"57.0.9"}
+{"_e":"env:mode","_t":1784311351153,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1784311351154,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1784311351261,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../../../app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1784311351436,"serverRoot":"../../..","projectRoot":"../../..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1784311351514,"plugins":[]}
+{"_e":"metro:instantiate","_t":1784311351877,"atlas":false,"workers":7,"host":"::","port":8081}
