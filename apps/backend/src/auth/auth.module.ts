@@ -9,7 +9,7 @@ import { AuthGuard } from './auth.guard.js';
   imports: [
     DbModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET ?? 'game4r-secret-dev',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' },
     }),
   ],
