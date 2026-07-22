@@ -1,6 +1,6 @@
 'use client'
-import { createContext, useEffect, useState } from 'react'
-import { FiltrarProdutos, Produto } from '@game4r/core'
+import { createContext, useCallback, useEffect, useState } from 'react'
+import { FiltrarProdutos, Produto, produtos as produtosFallback } from '@game4r/core'
 import useAPI from '../hooks/useAPI'
 
 export interface ContextoProdutosProps {
@@ -17,13 +17,20 @@ export function ProvedorProdutos({ children }: { children: React.ReactNode }) {
     const [pesquisa, setPesquisa] = useState<string>('')
     const [produtos, setProdutos] = useState<Produto[]>([])
 
-    useEffect(() => {
-        httpGet<Produto[]>('/produtos').then((produtos) => {
-            setProdutos(produtos ?? [])
-        }).catch(() => {
-            setProdutos([])
-        })
+    const carregarProdutos = useCallback(async () => {
+        try {
+            const dados = await httpGet<Produto[]>('/produtos')
+            if (Array.isArray(dados) && dados.length > 0) {
+                setProdutos(dados)
+                return
+            }
+        } catch {}
+        setProdutos(produtosFallback as Produto[])
     }, [httpGet])
+
+    useEffect(() => {
+        carregarProdutos()
+    }, [carregarProdutos])
 
     return (
         <ContextoProdutos.Provider

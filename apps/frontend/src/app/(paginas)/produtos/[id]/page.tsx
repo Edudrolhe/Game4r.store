@@ -6,16 +6,17 @@ import MedidorDePreco from '@/components/produto/MedidorDePreco'
 import ProdutoNaoEncontrado from '@/components/produto/ProdutoNaoEncontrado'
 import TituloProduto from '@/components/produto/TituloProduto'
 import type { Produto } from '@game4r/core'
+import { produtos as produtosFallback } from '@game4r/core'
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
 
 async function buscarProduto(id: number): Promise<Produto | null> {
     try {
         const res = await fetch(`${API}/produtos/${id}`, { next: { revalidate: 60 } })
-        if (!res.ok) return null
+        if (!res.ok) throw new Error('not found')
         return res.json()
     } catch {
-        return null
+        return (produtosFallback as Produto[]).find((p) => p.id === id) ?? null
     }
 }
 
