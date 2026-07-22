@@ -1,0 +1,27 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.import.gradle.enabled": false,
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "java.import.exclusions": [
+        "**/node_modules/**",
+        "**/android/**",
+        "**/.next/**",
+        "**/.turbo/**",
+        "**/mobile/android/**"
+    ],
+    "java.project.importOnFirstTime": "disabled",
+    "java.import.maven.enabled": false,
+    "java.jdt.ls.java.home": "/opt/homebrew/opt/openjdk",
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/android": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/android": true
+    },
+    "files.watcherExclude": {
+        "**/node_modules": true,
+        "**/android": true
+    }
+}

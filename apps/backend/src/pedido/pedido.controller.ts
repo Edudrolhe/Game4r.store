@@ -19,7 +19,10 @@ export class PedidoController {
 
   @Post()
   @UseGuards(AuthGuard)
-  salvar(@Body() pedido: unknown, @Usuario() usuario: { sub: number }): Promise<Pedido> {
+  salvar(
+    @Body() pedido: unknown,
+    @Usuario() usuario: { sub: number },
+  ): Promise<Pedido> {
     return this.repo.salvar(pedido as never, usuario.sub);
   }
 
@@ -31,7 +34,10 @@ export class PedidoController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  obterPorId(@Param('id', ParseIntPipe) id: number, @Usuario() usuario: { sub: number }): Promise<Pedido | null> {
+  obterPorId(
+    @Param('id', ParseIntPipe) id: number,
+    @Usuario() usuario: { sub: number },
+  ): Promise<Pedido | null> {
     return this.repo.obterPorId(id, usuario.sub);
   }
 

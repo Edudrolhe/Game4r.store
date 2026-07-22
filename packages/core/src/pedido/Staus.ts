@@ -1,6 +1,0 @@
-export enum Staus {
-    PENDENTE = 'PENDENTE',
-    APROVADO = 'APROVADO',
-    REPROVADO = 'REPROVADO',
-    CANCELADO = 'CANCELADO',
-    }

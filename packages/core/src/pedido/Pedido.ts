@@ -1,5 +1,5 @@
 import ItemPedido from './itemPedido';
-import { Staus } from './Staus';
+import { Status } from './Status';
 import { FormaPagamento } from './FormaPagamento';
 import PedidoEntrega from './PedidoEntrega';
 
@@ -8,7 +8,7 @@ export default interface Pedido {
     itens: ItemPedido[];
     entrega: PedidoEntrega;
     formaPagamento: FormaPagamento;
-    status: Staus;
+    status: Status;
     total: number;
     data: Date;
 }

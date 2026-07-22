@@ -5,7 +5,7 @@ import {
     ItemPedido,
     Pedido,
     PedidoEntrega,
-    Staus,
+    Status,
 } from '@game4r/core'
 import { createContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -59,7 +59,7 @@ export function ProvedorPagamento({ children }: { children: React.ReactNode }) {
                 formaPagamento,
                 valorTotal,
                 entrega: entrega as PedidoEntrega,
-                status: Staus.PENDENTE,
+                status: Status.PENDENTE,
                 itens: itens.map(
                     (item: ItemCarrinho) =>
                         ({

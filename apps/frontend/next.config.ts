@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: false,
   images: {
     remotePatterns: [
       {
@@ -8,8 +9,7 @@ const nextConfig: NextConfig = {
         hostname: "firebasestorage.googleapis.com",
       },
     ],
-  }
-  /* config options here */
+  },
 };
 
 export default nextConfig;

@@ -7,7 +7,7 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Staus {
+enum Status {
   RECEBIDO
   PENDENTE
   APROVADO
@@ -79,7 +79,7 @@ model Pedido {
   id             Int           @id @default(autoincrement())
   total          Float
   data           DateTime      @default(now())
-  status         Staus         @default(PENDENTE)
+  status         Status         @default(PENDENTE)
   formaPagamento FormaPagamento
 
   usuarioId Int

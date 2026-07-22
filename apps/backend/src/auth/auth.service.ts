@@ -30,7 +30,9 @@ export class AuthService {
   }
 
   async login(email: string, senha: string) {
-    const usuario = await this.prisma.client.usuario.findUnique({ where: { email } });
+    const usuario = await this.prisma.client.usuario.findUnique({
+      where: { email },
+    });
     if (!usuario) throw new UnauthorizedException('Email ou senha inválidos');
     const valida = await bcrypt.compare(senha, usuario.senha);
     if (!valida) throw new UnauthorizedException('Email ou senha inválidos');
@@ -38,7 +40,11 @@ export class AuthService {
   }
 
   private gerarToken(usuario: { id: number; nome: string; email: string }) {
-    const payload = { sub: usuario.id, nome: usuario.nome, email: usuario.email };
+    const payload = {
+      sub: usuario.id,
+      nome: usuario.nome,
+      email: usuario.email,
+    };
     return { token: this.jwt.sign(payload), usuario };
   }
 }

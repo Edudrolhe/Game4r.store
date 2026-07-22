@@ -21,7 +21,7 @@ export default function CadastroPage() {
   const [erro, setErro] = useState('');
   const router = useRouter();
 
-  function update(field: string, value: string) {
+  function update(field: keyof typeof form, value: string) {
     setForm((f) => ({ ...f, [field]: value }));
   }
 
@@ -41,7 +41,7 @@ export default function CadastroPage() {
     }
   }
 
-  const fields = [
+  const fields: { label: string; field: keyof typeof form; type: string }[] = [
     { label: 'Nome', field: 'nome', type: 'text' },
     { label: 'Email', field: 'email', type: 'email' },
     { label: 'Senha', field: 'senha', type: 'password' },
@@ -72,7 +72,7 @@ export default function CadastroPage() {
               <label className="text-zinc-400 text-sm">{label}</label>
               <input
                 type={type}
-                value={(form as any)[field]}
+                value={form[field]}
                 onChange={(e) => update(field, e.target.value)}
                 className="bg-black/30 border border-zinc-700 rounded-lg px-4 py-2 text-white outline-none focus:border-violet-500"
                 required

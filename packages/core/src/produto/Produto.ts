@@ -1,4 +1,4 @@
-import Especificacoes from "./Espeficacoes"
+import Especificacoes from "./Especificacoes"
 import Precificavel from "./Precificavel"
 
 export default interface Produto extends Precificavel {

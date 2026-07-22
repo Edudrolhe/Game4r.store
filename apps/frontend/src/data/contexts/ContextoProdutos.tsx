@@ -20,6 +20,8 @@ export function ProvedorProdutos({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         httpGet<Produto[]>('/produtos').then((produtos) => {
             setProdutos(produtos ?? [])
+        }).catch(() => {
+            setProdutos([])
         })
     }, [httpGet])
 

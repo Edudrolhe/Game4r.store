@@ -58,7 +58,10 @@ export class PedidoPrisma {
     });
   }
 
-  async salvar(pedido: Record<string, unknown>, usuarioId: number): Promise<Pedido> {
+  async salvar(
+    pedido: Record<string, unknown>,
+    usuarioId: number,
+  ): Promise<Pedido> {
     const { entrega, itens, valorTotal, ...data } = pedido;
     const entregaData = entrega as Record<string, unknown>;
     return this.prisma.client.pedido.create({
@@ -71,7 +74,8 @@ export class PedidoPrisma {
             nome: entregaData.nome,
             email: entregaData.email,
             telefone: (entregaData.cpf ?? entregaData.telefone) as string,
-            endereco: (entregaData.logradouro ?? entregaData.endereco) as string,
+            endereco: (entregaData.logradouro ??
+              entregaData.endereco) as string,
             numero: (entregaData.numero ?? '') as string,
             complemento: entregaData.complemento as string | undefined,
             bairro: (entregaData.bairro ?? '') as string,
@@ -81,7 +85,13 @@ export class PedidoPrisma {
           },
         },
         itens: {
-          create: (itens as { produto: { id: number }; precoUnitario: number; quantidade: number }[]).map((item) => ({
+          create: (
+            itens as {
+              produto: { id: number };
+              precoUnitario: number;
+              quantidade: number;
+            }[]
+          ).map((item) => ({
             produtoId: item.produto.id,
             precoUnitario: item.precoUnitario,
             quantidade: item.quantidade,
