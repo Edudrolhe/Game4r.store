@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Game4r.store — Order Placement",
+    "subtitle": "From cart to confirmed order",
+    "output": "order-dataflow.html",
+    "quality_profile": "standard",
+    "visual_preset": "classic",
+    "viewBox": [940, 500]
+  },
+  "stages": [
+    { "label": "Client" },
+    { "label": "API" },
+    { "label": "Service" },
+    { "label": "Database" }
+  ],
+  "nodes": [
+    { "id": "web", "type": "frontend", "label": "Frontend", "sublabel": "Cart page", "stage": 0, "row": 0 },
+    { "id": "auth-guard", "type": "security", "label": "AuthGuard", "sublabel": "JWT verify", "stage": 1, "row": 0 },
+    { "id": "pedido-svc", "type": "backend", "label": "Pedido Service", "sublabel": "NestJS Module", "stage": 2, "row": 0 },
+    { "id": "core-carrinho", "type": "backend", "label": "Carrinho (core)", "sublabel": "@game4r/core", "stage": 2, "row": 1 },
+    { "id": "postgres", "type": "database", "label": "PostgreSQL", "sublabel": "Prisma", "stage": 3, "row": 0 }
+  ],
+  "flows": [
+    { "id": "web-order", "from": "web", "to": "auth-guard", "label": "POST /pedidos", "variant": "emphasis", "classification": "JWT required" },
+    { "id": "auth-pass", "from": "auth-guard", "to": "pedido-svc", "label": "authenticated", "variant": "security", "route": "vertical-channel" },
+    { "id": "calc-totals", "from": "pedido-svc", "to": "core-carrinho", "label": "calc totals", "variant": "dashed", "labelDx": 20 },
+    { "id": "save-order", "from": "pedido-svc", "to": "postgres", "label": "transaction", "variant": "emphasis", "labelDy": 46 },
+    { "id": "order-saved", "from": "postgres", "to": "pedido-svc", "label": "order created", "variant": "dashed" },
+    { "id": "response", "from": "pedido-svc", "to": "web", "label": "201 OK", "variant": "dashed", "route": "top-channel" }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "Transaction", "items": ["Creates Pedido + PedidoEntrega + ItemPedido atomically", "Rolls back entire order on failure"] },
+    { "dot": "violet", "title": "Auth", "items": ["AuthGuard extracts Bearer token", "Verifies JWT with 7-day expiry"] }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Game4r.store — System Architecture",
+    "subtitle": "Monorepo: Turborepo + NestJS 11 + Next.js 16 + Expo 57",
+    "output": "system-architecture.html",
+    "quality_profile": "standard",
+    "visual_preset": "blueprint",
+    "viewBox": [960, 540],
+    "views": [
+      { "id": "request-path", "label": "Request Path", "focus": ["users", "frontend", "api", "postgres"], "note": "How requests flow through the system." }
+    ]
+  },
+  "components": [
+    { "id": "users", "type": "external", "label": "Users", "sublabel": "Browser / App", "pos": [40, 200], "size": [110, 48] },
+    { "id": "frontend", "type": "frontend", "label": "Web App", "sublabel": "Next.js 16", "pos": [240, 200], "size": [120, 52], "tag": "Tailwind" },
+    { "id": "mobile", "type": "frontend", "label": "Mobile App", "sublabel": "Expo 57", "pos": [240, 370], "size": [120, 52], "tag": "expo-router" },
+    { "id": "api", "type": "backend", "label": "API Server", "sublabel": "NestJS 11", "pos": [500, 280], "size": [130, 60] },
+    { "id": "auth-mod", "type": "security", "label": "Auth", "sublabel": "JWT + bcrypt", "pos": [430, 60], "size": [100, 44] },
+    { "id": "produto-mod", "type": "backend", "label": "Produto", "sublabel": "CRUD", "pos": [538, 60], "size": [100, 44] },
+    { "id": "pedido-mod", "type": "backend", "label": "Pedido", "sublabel": "Orders", "pos": [430, 450], "size": [100, 44] },
+    { "id": "avaliacao-mod", "type": "backend", "label": "Avaliação", "sublabel": "Reviews", "pos": [538, 450], "size": [100, 44] },
+    { "id": "postgres", "type": "database", "label": "PostgreSQL", "sublabel": "Prisma 7", "pos": [740, 280], "size": [120, 52] },
+    { "id": "core", "type": "backend", "label": "@game4r/core", "sublabel": "Shared Lib", "pos": [740, 80], "size": [120, 44] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Monorepo (Turborepo)", "wraps": ["frontend", "mobile", "api", "auth-mod", "produto-mod", "pedido-mod", "avaliacao-mod", "core"] }
+  ],
+  "connections": [
+    { "id": "users-to-frontend", "from": "users", "to": "frontend", "label": "HTTPS", "variant": "emphasis", "route": "orthogonal-h" },
+    { "id": "users-to-mobile", "from": "users", "to": "mobile", "label": "HTTPS", "variant": "emphasis", "route": "orthogonal-h" },
+    { "id": "frontend-to-api", "from": "frontend", "to": "api", "label": "REST", "fromSide": "right", "toSide": "left" },
+    { "id": "mobile-to-api", "from": "mobile", "to": "api", "label": "REST", "fromSide": "right", "toSide": "left" },
+    { "id": "auth-link", "from": "api", "to": "auth-mod", "label": "/auth/*", "fromSide": "top", "toSide": "bottom" },
+    { "id": "produto-link", "from": "api", "to": "produto-mod", "label": "/produtos", "fromSide": "top", "toSide": "bottom" },
+    { "id": "pedido-link", "from": "api", "to": "pedido-mod", "label": "/pedidos", "fromSide": "bottom", "toSide": "top" },
+    { "id": "avaliacao-link", "from": "api", "to": "avaliacao-mod", "label": "/avaliacoes", "fromSide": "bottom", "toSide": "top", "labelDy": 24 },
+    { "id": "api-to-postgres", "from": "api", "to": "postgres", "label": "SQL (Prisma)" },
+    { "id": "core-link", "from": "api", "to": "core", "label": "shared types", "variant": "dashed", "fromSide": "top", "toSide": "bottom" }
+  ],
+  "cards": [
+    { "dot": "violet", "title": "Clients", "items": ["Next.js 16 web app with Tailwind CSS 4", "Expo 57 mobile app with expo-router"] },
+    { "dot": "emerald", "title": "API (NestJS 11)", "items": ["4 modules: Auth, Produto, Pedido, Avaliação", "JWT + bcrypt authentication, Prisma 7 ORM"] },
+    { "dot": "amber", "title": "@game4r/core", "items": ["Pure TypeScript, zero framework deps", "Carrinho, CalcularParcelamento, Filtros"] }
+  ]
+}

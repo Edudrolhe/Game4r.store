@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Game4r.store — Authentication Flow",
+    "subtitle": "Register / Login / Guarded Request",
+    "output": "auth-flow.html",
+    "quality_profile": "standard",
+    "visual_preset": "classic",
+    "viewBox": [920, 840]
+  },
+  "participants": [
+    { "id": "user", "type": "external", "label": "User", "sublabel": "Browser / App" },
+    { "id": "frontend", "type": "frontend", "label": "Frontend", "sublabel": "Next.js / Expo" },
+    { "id": "api", "type": "backend", "label": "API", "sublabel": "NestJS" },
+    { "id": "service", "type": "backend", "label": "AuthService", "sublabel": "bcrypt + JWT" },
+    { "id": "db", "type": "database", "label": "PostgreSQL", "sublabel": "Prisma" }
+  ],
+  "segments": [
+    { "from": 160, "to": 275, "label": "01 / REGISTER" },
+    { "from": 310, "to": 460, "label": "02 / LOGIN" },
+    { "from": 510, "to": 725, "label": "03 / GUARDED REQUEST" }
+  ],
+  "messages": [
+    { "id": "fill-form", "from": "user", "to": "frontend", "y": 180, "label": "Fill register form" },
+    { "id": "post-register", "from": "frontend", "to": "api", "y": 205, "label": "POST /auth/cadastrar", "variant": "emphasis" },
+    { "id": "hash-password", "from": "api", "to": "service", "y": 230, "label": "bcrypt.hash()", "variant": "security" },
+    { "id": "save-user", "from": "service", "to": "db", "y": 235, "label": "INSERT Usuario" },
+    { "id": "user-created", "from": "db", "to": "service", "y": 265, "label": "user record", "variant": "return" },
+    { "id": "sign-jwt-reg", "from": "service", "to": "api", "y": 290, "label": "sign JWT", "variant": "return" },
+    { "id": "response-register", "from": "api", "to": "frontend", "y": 315, "label": "{ token, usuario }", "variant": "return" },
+
+    { "id": "fill-login", "from": "user", "to": "frontend", "y": 345, "label": "Fill login form" },
+    { "id": "post-login", "from": "frontend", "to": "api", "y": 370, "label": "POST /auth/login", "variant": "emphasis" },
+    { "id": "find-user", "from": "api", "to": "service", "y": 395, "label": "findByEmail()" },
+    { "id": "query-user", "from": "service", "to": "db", "y": 400, "label": "SELECT usuario" },
+    { "id": "user-found", "from": "db", "to": "service", "y": 430, "label": "user + hash", "variant": "return" },
+    { "id": "compare-sign", "from": "service", "to": "api", "y": 455, "label": "compare + sign", "variant": "security" },
+
+    { "id": "store-token", "from": "frontend", "to": "user", "y": 525, "label": "Token stored" },
+    { "id": "guarded-request", "from": "user", "to": "frontend", "y": 555, "label": "Access /pedidos" },
+    { "id": "api-call", "from": "frontend", "to": "api", "y": 580, "label": "GET /pedidos", "variant": "emphasis" },
+    { "id": "extract-token", "from": "api", "to": "service", "y": 605, "label": "verify JWT", "variant": "security" },
+    { "id": "payload-valid", "from": "service", "to": "api", "y": 635, "label": "payload", "variant": "return" },
+    { "id": "process-request", "from": "api", "to": "db", "y": 670, "label": "SELECT orders" },
+    { "id": "response-data", "from": "db", "to": "api", "y": 700, "label": "orders[]", "variant": "return" },
+    { "id": "response-client", "from": "api", "to": "frontend", "y": 720, "label": "200 [orders]", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "api", "from": 195, "to": 320, "type": "backend" },
+    { "participant": "service", "from": 220, "to": 295, "type": "backend" },
+    { "participant": "api", "from": 360, "to": 490, "type": "backend" },
+    { "participant": "service", "from": 385, "to": 460, "type": "backend" },
+    { "participant": "api", "from": 570, "to": 725, "type": "backend" },
+    { "participant": "service", "from": 595, "to": 640, "type": "backend" }
+  ],
+  "cards": [
+    { "dot": "violet", "title": "Security", "items": ["Passwords hashed with bcrypt (salt rounds: 10)", "JWT signed with secret, 7-day expiry"] },
+    { "dot": "emerald", "title": "Token Flow", "items": ["Token in localStorage/SecureStore", "Sent as Authorization: Bearer <token>"] }
+  ]
+}
