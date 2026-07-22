@@ -1,0 +1,524 @@
+@startuml
+skinparam backgroundColor #0D001E
+skinparam classBackgroundColor #1A0D29
+skinparam classBorderColor #7811F5
+skinparam classFontColor white
+skinparam classFontSize 13
+skinparam classAttributeFontSize 11
+skinparam classHeaderBackgroundColor #14002D
+skinparam arrowColor #39D6A2
+skinparam packageBackgroundColor #0D001E
+skinparam packageBorderColor #7811F5
+skinparam packageFontColor #CB0BD4
+skinparam packageFontSize 15
+skinparam noteBackgroundColor #1A0D29
+skinparam noteBorderColor #39D6A2
+skinparam noteFontColor white
+skinparam defaultTextAlignment left
+
+title <size:24><color:#7811F5><b>Game4r.store</b></color> <color:white>Design System</color></size>
+
+left header
+<color:#39D6A2>Versão 1.0</color>
+<color:#71717a>Monorepo E-commerce Gamer</color>
+end header
+
+' ====================================================================
+' TOKENS
+' ====================================================================
+package "🎨 Tokens" as TOKENS {
+
+  class Cores <<static>> {
+    {static} PRIMARIA : #7811F5 (Roxo)
+    {static} SECUNDARIA : #CB0BD4 (Rosa)
+    {static} BG_PRIMARIO : #0D001E
+    {static} BG_SECUNDARIO : #1A0D29
+    {static} TEXTO_DESTAQUE_1 : #39D6A2 (Verde)
+    {static} TEXTO_DESTAQUE_2 : #CB0BD4 (Rosa)
+    {static} ERRO : #ef4444
+    {static} SUCESSO : #34d399
+    {static} TEXTO_CINZA : #a1a1aa
+    {static} BORDA : rgba(255,255,255,0.06)
+  }
+
+  class Tipografia {
+    {static} fontFamily : Montserrat
+    {static} weights : 400 (regular), 600 (semibold), 700 (bold)
+    {static} sizes : 13px, 15px, 16px, 17px, 18px, 20px, 22px, 26px, 28px
+    {static} corPadrao : #FFF
+    {static} corSecundaria : #a1a1aa
+  }
+
+  class Espacamento {
+    {static} gap : 4, 8, 10, 12, 16, 20, 24, 30
+    {static} padding : 8, 10, 12, 16, 20, 24, 30, 40
+    {static} margin : 4, 8, 10, 12, 16, 20
+    {static} borderRadius : 6, 8, 10, 14, 9999
+  }
+
+  class Iconografia {
+    {static} biblioteca : Ionicons
+    {static} tamanhos : 16, 18, 20, 22, 24, 64, 100
+    {static} corPadrao : #FFF
+  }
+
+  Cores --> Tipografia : define cor do texto
+  Cores --> Iconografia : define cor dos ícones
+  Espacamento --> Cores : usado em conjunto
+}
+
+' ====================================================================
+' COMPONENTES BASE
+' ====================================================================
+package "🧱 Componentes Base" as BASE {
+
+  class Botao {
+    {static} borderRadius : 9999 (pill)
+    {static} height : 35, 40, 48
+    {static} flexDirection : row
+    {static} gap : 8
+    {static} paddingHorizontal : 45, 80
+    +onPress()
+    +disabled : boolean
+  }
+
+  class BotaoPrimario {
+    +backgroundColor : PRIMARIA
+    +textColor : #FFF
+  }
+
+  class BotaoSecundario {
+    +backgroundColor : SECUNDARIA
+    +textColor : #FFF
+  }
+
+  class BotaoOutline {
+    +backgroundColor : #1A0D29
+    +borderColor : PRIMARIA
+    +textColor : PRIMARIA
+  }
+
+  class BotaoPerigo {
+    +backgroundColor : #ef4444
+    +textColor : #FFF
+  }
+
+  class Input {
+    {static} borderRadius : 10
+    {static} height : 40, 48
+    {static} backgroundColor : #1A0D29
+    {static} color : #FFF
+    {static} borderColor : rgba(255,255,255,0.1)
+    {static} placeholderColor : #999
+    +value : String
+    +onChangeText(text)
+    +secureTextEntry : boolean
+    +keyboardType : String
+  }
+
+  class Cartao {
+    {static} bgPrimario : #1A0D29
+    {static} bgSecundario : #241440
+    {static} borderRadius : 8, 10, 14
+    {static} borderWidth : 1
+    {static} borderColor : rgba(255,255,255,0.06)
+    {static} padding : 16
+  }
+
+  class Avatar {
+    {static} width : 120, 137
+    {static} height : 120, 134
+    {static} borderRadius : 60
+    +source : Image
+  }
+
+  class Badge {
+    {static} bg : rgba(0,0,0,0.6)
+    {static} borderRadius : 8
+    {static} paddingH : 8
+    {static} paddingV : 4
+  }
+
+  Cores --> Botao : define bg
+  Cores --> BotaoPrimario : herda bg
+  Cores --> BotaoSecundario : herda bg
+  Cores --> BotaoOutline : herda border
+  Cores --> BotaoPerigo : define bg
+  Cores --> Input : define bg
+  Cores --> Cartao : define bg
+  Espacamento --> Botao : define padding/gap
+  Espacamento --> Input : define padding
+  Espacamento --> Cartao : define padding
+  BotaoPrimario -up-|> Botao : extends
+  BotaoSecundario -up-|> Botao : extends
+  BotaoOutline -up-|> Botao : extends
+  BotaoPerigo -up-|> Botao : extends
+}
+
+' ====================================================================
+' COMPONENTES DE LAYOUT
+' ====================================================================
+package "📐 Componentes de Layout" as LAYOUT {
+
+  class SafeAreaView {
+    {static} flex : 1
+    {static} bg : BG_PRIMARIO
+  }
+
+  class ScrollView {
+    {static} showsVerticalScrollIndicator : false
+    +contentContainerStyle
+  }
+
+  class Header {
+    {static} bg : #14002D
+    {static} borderBottom : 1px
+    {static} borderColor : rgba(120,17,245,0.2)
+    {static} paddingH : 20
+    {static} paddingV : 8
+    +titulo : String
+  }
+
+  class HeaderBusca {
+    {static} searchBorderRadius : 9999
+    {static} searchBg : #1A0D29
+    {static} searchIconBg : TEXTO_DESTAQUE_1
+    +TextInput : O que você procura?
+    +Icone : search
+  }
+
+  class Footer {
+    {static} bg : #1A0D29
+    {static} borderTop : 1px
+    {static} borderColor : rgba(255,255,255,0.08)
+    {static} padding : 16
+  }
+
+  class Divisor {
+    {static} width : 80%
+    {static} height : 1px
+    {static} bg : rgba(255,255,255,0.08)
+  }
+
+  SafeAreaView --> ScrollView : contém
+  Header --> HeaderBusca : pode conter
+  ScrollView --> Footer : rodapé fixo
+}
+
+' ====================================================================
+' CABEÇALHO CHECKOUT
+' ====================================================================
+package "🛒 Checkout" as CHECKOUT {
+
+  class CabecalhoCheckout {
+    +passo : carrinho | pagamento
+    {static} circuloAtivo : #FF57A0
+    {static} circuloInativo : #333
+    {static} textoAtivo : #FF57A0
+    {static} textoInativo : #888
+    {static} separador : 40px
+    +renderizarItem(indice, titulo)
+  }
+
+  class SelecaoFormaPagamento {
+    +formaPagamento : FormaPagamento
+    +onChange(value)
+    -opcoes : PIX, Boleto, Cartão
+  }
+
+  class FormularioEntrega {
+    +entrega : PedidoEntrega
+    +onChange(data)
+    -campos : Nome, Email, CPF, Logradouro, Cidade, Estado
+  }
+
+  class ResumoPagamento {
+    +qtdeItens : int
+    +valorTotal : float
+    +valorTotalCheio : float
+    +parcelamento : Parcelamento
+    +finalizando : boolean
+    +finalizarCompra()
+  }
+
+  class TotalCarrinho {
+    +qtdeItens : int
+    +valorTotal : float
+    +continuar()
+  }
+
+  CabecalhoCheckout --> SelecaoFormaPagamento : passo pagamento
+  CabecalhoCheckout --> FormularioEntrega : passo pagamento
+  CabecalhoCheckout --> TotalCarrinho : passo carrinho
+  FormularioEntrega --> Input : usa
+  SelecaoFormaPagamento --> Botao : radio buttons
+  ResumoPagamento --> BotaoPrimario : finalizar
+  TotalCarrinho --> BotaoSecundario : continuar
+  TotalCarrinho --> Cores : #34d399 no valor
+}
+
+' ====================================================================
+' COMPONENTES DE NEGÓCIO
+' ====================================================================
+package "📦 Componentes de Negócio" as NEGOCIO {
+
+  class ProdutoItem {
+    +produto : Produto
+    {static} cardWidth : screenWidth - 40
+    {static} imageHeight : 180
+    +adicionarItem()
+    +produtoSelecionado()
+  }
+
+  class ListaProdutos {
+    +produtos : Produto[]
+    {static} layout : grid / vertical
+    +render()
+  }
+
+  class FiltroProduto {
+    +pesquisa : String
+    +onChange(text)
+  }
+
+  class BannerCompra {
+    +produto : Produto
+    +parcelamento : Parcelamento
+    +adicionarItem()
+    +comprar()
+  }
+
+  class Especificacoes {
+    +produto : Produto
+    -excluir : destaque
+    {static} nomeWidth : 35%
+    {static} bg : PRIMARIA
+    +renderizar()
+  }
+
+  class MedidorPreco {
+    +produto : Produto
+    -percentual : float
+    {static} gradientColors : #22c55e, #facc15, #ef4444
+    +calcularPosicao()
+  }
+
+  class AvaliacoesUsuarios {
+    +produto : Produto
+    {static} notaDestaque : SECUNDARIA
+    +renderizar()
+  }
+
+  class CarrinhoItem {
+    +item : ItemCarrinho
+    +adicionarItem()
+    +removerItem()
+    +removerProduto()
+    {static} bg : #241440
+    {static} borderRadius : 8
+  }
+
+  class CarrinhoVazio {
+    +icone : cart-outline
+    +mensagem : Carrinho está Vazio
+  }
+
+  class NotaReview {
+    +nota : Float
+    +tamanho : 12, 14, 16, 18
+    -estrelas : Ionicons
+    +renderizar()
+  }
+
+  ListaProdutos --> ProdutoItem : contém *
+  FiltroProduto --> ListaProdutos : filtra
+  ProdutoItem --> BannerCompra : navega para
+  ProdutoItem --> NotaReview : usa
+  BannerCompra --> Especificacoes : exibe
+  BannerCompra --> MedidorPreco : exibe
+  BannerCompra --> AvaliacoesUsuarios : exibe
+  BannerCompra --> CarrinhoItem : adiciona
+  CarrinhoItem --> NotaReview : usa
+}
+
+' ====================================================================
+' TELAS / PÁGINAS
+' ====================================================================
+package "📱 Telas (Screens)" as SCREENS {
+
+  class TelaInicio {
+    +header : HeaderBusca
+    +lista : ListaProdutos
+    +scroll : ScrollView
+  }
+
+  class TelaProdutoDetalhes {
+    +scroll : ScrollView
+    +info : Especificacoes
+    +banner : BannerCompra
+    +medidor : MedidorDePreco
+    +avaliacoes : AvaliacoesUsuarios
+  }
+
+  class TelaCarrinho {
+    +cabecalho : CabecalhoCheckout
+    +lista : CarrinhoItem[]
+    +total : TotalCarrinho
+    +vazio : CarrinhoVazio
+  }
+
+  class TelaPagamento {
+    +cabecalho : CabecalhoCheckout
+    +formaPagamento : SelecaoFormaPagamento
+    +entrega : FormularioEntrega
+    +resumo : ResumoPagamento
+  }
+
+  class TelaSucesso {
+    +logo : Image
+    +titulo : Pedido Realizado!
+    +botao : Voltar ao Inicio
+  }
+
+  class TelaLogin {
+    +inputs : Input (email, senha)
+    +botao : BotaoPrimario
+    +link : Cadastre-se
+  }
+
+  class TelaCadastro {
+    +inputs : Input (nome, email, senha, telefone)
+    +botao : BotaoPrimario
+    +link : Login
+  }
+
+  class TelaUsuario {
+    +perfil : Perfil
+    +compras : Botao (Últimas Compras)
+    +sair : BotaoPerigo (Logout)
+  }
+
+  TelaInicio --> TelaProdutoDetalhes : navega
+  TelaProdutoDetalhes --> TelaCarrinho : comprar
+  TelaCarrinho --> TelaPagamento : continuar
+  TelaPagamento --> TelaSucesso : finalizar
+  TelaSucesso --> TelaInicio : voltar
+  TelaLogin --> TelaCadastro : cadastrar
+  TelaCadastro --> TelaInicio : sucesso
+  TelaUsuario --> TelaLogin : login
+}
+
+' ====================================================================
+' CAMADA DE DADOS
+' ====================================================================
+package "🗄️ Camada de Dados" as DATA {
+
+  class ContextoProdutos {
+    +produtos : Produto[]
+    +pesquisa : String
+    +setPesquisa(text)
+    +produtoPorId(id)
+    -carregarProdutos()
+  }
+
+  class ContextoCarrinho {
+    +itens : ItemCarrinho[]
+    +qtdeItens : int
+    +valorTotal : float
+    +parcelamento : Parcelamento
+    +adicionarItem(produto)
+    +removerItem(produto)
+    +removerProduto(produto)
+    +limparCarrinho()
+  }
+
+  class ContextoUsuario {
+    +usuario : Usuario
+    +carregando : boolean
+    +login(email, senha)
+    +cadastrar(dados)
+    +logout()
+  }
+
+  class ContextoPagamento {
+    +entrega : PedidoEntrega
+    +formaPagamento : FormaPagamento
+    +alterarEntrega(data)
+    +alterarFormaPagamento(value)
+    +finalizarCompra()
+  }
+
+  class useAPI {
+    +httpGet(path)
+    +httpPost(path, body)
+    -extrairDados(response)
+  }
+
+  class useLocalStorage {
+    +salvarItem(chave, valor)
+    +obterItem(chave)
+  }
+
+  ContextoProdutos --> useAPI : GET /produtos
+  ContextoCarrinho --> useLocalStorage : persistir
+  ContextoUsuario --> useAPI : POST /auth
+  ContextoUsuario --> useLocalStorage : token
+  ContextoPagamento --> useAPI : POST /pedidos
+  ContextoPagamento --> useLocalStorage : entrega
+}
+
+' ====================================================================
+' RELAÇÕES CRUZADAS
+' ====================================================================
+Cores --> Header : define bg
+Cores --> Footer : define bg
+Cores --> CabecalhoCheckout : define ativo/inativo
+Cores --> MedidorPreco : define gradient
+Cores --> AvaliacoesUsuarios : define nota cor
+Cores --> NotaReview : define cor estrelas
+Cores --> Avatar : define bg
+Cores --> Divisor : define bg
+Tipografia --> ProdutoItem : usa
+Tipografia --> BannerCompra : usa
+Tipografia --> NotaReview : usa
+Iconografia --> ProdutoItem : cart-outline
+Iconografia --> BannerCompra : cart, card
+Iconografia --> CarrinhoItem : trash
+Iconografia --> TelaInicio : search
+Iconografia --> TelaSucesso : home
+
+Espacamento --> TelaInicio : layout
+Espacamento --> TelaProdutoDetalhes : padding
+Espacamento --> TelaCarrinho : spacing
+Espacamento --> TelaPagamento : gap
+
+' ====================================================================
+' NOTAS / LEGENDAS
+' ====================================================================
+note right of Cores
+  <b>Tema escuro</b>
+  Fundo: #0D001E
+  Roxo como primária
+  Rosa como secundária
+  Verde para CTAs/destaque
+  Vermelho para erros/logout
+end note
+
+note right of Botao
+  <b>Botões</b>
+  Primário: roxo (#7811F5)
+  Secundário: rosa (#CB0BD4)
+  Outline: borda roxa
+  Perigo: vermelho (#ef4444)
+  Sempre borda pill (9999)
+end note
+
+note right of TelaCarrinho
+  <b>Fluxo de Compra</b>
+  1. Adiciona ao carrinho
+  2. Carrinho → Continuar
+  3. Pagamento → Finalizar
+  4. Sucesso ✓
+end note
+
+@enduml
