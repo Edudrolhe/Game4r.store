@@ -10,7 +10,7 @@ export default function Logo() {
                 height={1052}
                 alt="logo"
                 priority
-                className="w-16 sm:w-[100px] h-auto"
+                className="w-10 sm:w-[100px] h-auto"
             />
             <Image
                 src="/logo-texto.png"
@@ -18,7 +18,7 @@ export default function Logo() {
                 height={231}
                 alt="logo"
                 priority
-                className="w-64 sm:w-[420px] h-auto"
+                className="w-36 sm:w-[420px] h-auto"
             />
         </Link>
     )
